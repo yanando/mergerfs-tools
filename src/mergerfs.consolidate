@@ -305,7 +305,7 @@ def main():
                 print_args(args)
                 if execute:
                     execute_cmd(args)
-                if copy_hardlinks:
+                if copy_hardlinks and st.st_ino in inode_stats:
                     for path in inode_stats[st.st_ino]:
                         if relpath in path:
                             continue
