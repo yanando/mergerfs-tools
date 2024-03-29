@@ -297,15 +297,10 @@ def main():
 
                 args = build_move_file(srcpath,tgtpath,relpath)
 
-                copy_hardlinks = False
-                # if file has hardlinks, recreate them on tgtpath
-                if move_hardlinks and st.st_nlink > 1:
-                    copy_hardlinks = True
-
                 print_args(args)
                 if execute:
                     execute_cmd(args)
-                if copy_hardlinks and st.st_ino in inode_stats:
+                if move_hardlinks and st.st_nlink > 1 and st.st_ino in inode_stats:
                     for path in inode_stats[st.st_ino]:
                         if relpath in path:
                             continue
